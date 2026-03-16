@@ -1,2 +1,2 @@
 # blent-project
-# blent-project
+Mon projet Blent AI
