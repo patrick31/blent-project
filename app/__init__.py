@@ -20,7 +20,7 @@ from .orders.routes import orders_bp
 
 
 # Etape 0
-def create_app(config_class=None):
+def create_app(config_class=None, skip_db_check=False):
     """Crée et configure l'application Flask selon la classe de configuration fournie."""
 
     if config_class is None:
@@ -32,15 +32,17 @@ def create_app(config_class=None):
 
     db.init_app(app)
 
-    uri = app.config.get("SQLALCHEMY_DATABASE_URI", "")
-    if uri.startswith("sqlite:///") and uri != "sqlite:///:memory:":
-        db_path = Path(uri.removeprefix("sqlite:///"))
-        if not db_path.exists():
-            print("ERREUR : la base de données est introuvable.")
-            print(f"  Chemin attendu : {db_path}")
-            print()
-            print("  Lancez d'abord : python seed.py")
-            sys.exit(1)
+    # on rajoute un test pour prévénir si la base n'a pas été initialisée avec seed.py sauf si lancé depuis seed.py
+    if not skip_db_check:
+        uri = app.config.get("SQLALCHEMY_DATABASE_URI", "")
+        if uri.startswith("sqlite:///") and uri != "sqlite:///:memory:":
+            db_path = Path(uri.removeprefix("sqlite:///"))
+            if not db_path.exists():
+                print("ERREUR : la base de données est introuvable.")
+                print(f"  Chemin attendu : {db_path}")
+                print()
+                print("  Lancez d'abord : python seed.py")
+                sys.exit(1)
 
     with app.app_context():
         db.create_all()

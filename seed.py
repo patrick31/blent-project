@@ -8,7 +8,7 @@ from app.extensions import db
 from app.models import Commande, LigneCommande, Produit, Utilisateur
 
 INSTANCE_DIR.mkdir(exist_ok=True)
-app = create_app(DevelopmentConfig)
+app = create_app(DevelopmentConfig, skip_db_check=True)
 
 with app.app_context():
     db.drop_all()
