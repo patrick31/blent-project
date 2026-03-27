@@ -6,13 +6,14 @@ Réalisé pendant la préparation du projet (étape 0)
 """
 from flask import Flask
 
-__version__ = "1.3.0"
+__version__ = "1.4.0"
 
 from .config import DevelopmentConfig
 from .extensions import db
 from .utils.helpers import json_message
 from .auth.routes import auth_bp
 from .products.routes import products_bp
+from .orders.routes import orders_bp
 
 
 # Etape 0
@@ -33,6 +34,7 @@ def create_app(config_class=None):
 
     app.register_blueprint(auth_bp)
     app.register_blueprint(products_bp)  # Etape 2
+    app.register_blueprint(orders_bp)  # Etape 3
 
     @app.get("/")
     def healthcheck():

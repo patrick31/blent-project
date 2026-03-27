@@ -2,9 +2,6 @@
 .idea/
 .vscode/
 
-# Claude Code
-.claude/
-
 # Environnement virtuel Python
 .venv/
 venv/
