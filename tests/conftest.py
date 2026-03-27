@@ -7,6 +7,8 @@ import pytest
 from app import create_app
 from app.config import TestingConfig
 from app.extensions import db
+from app.utils.helpers import generate_token
+from app.models import Utilisateur
 
 
 @pytest.fixture
@@ -25,3 +27,35 @@ def app():
 def client(app):
     """Retourne le client de test Flask pour effectuer des requêtes HTTP simulées."""
     return app.test_client()
+
+
+@pytest.fixture
+def admin_user(app):
+    """Crée et retourne un utilisateur avec le rôle admin en base de test."""
+    utilisateur = Utilisateur(nom="admin", email="admin@example.com", role="admin")
+    utilisateur.set_password("adminpass")
+    db.session.add(utilisateur)
+    db.session.commit()
+    return utilisateur
+
+
+@pytest.fixture
+def client_user(app):
+    """Crée et retourne un utilisateur avec le rôle client en base de test."""
+    utilisateur = Utilisateur(nom="alice", email="alice@example.com", role="client")
+    utilisateur.set_password("alicepass")
+    db.session.add(utilisateur)
+    db.session.commit()
+    return utilisateur
+
+
+@pytest.fixture
+def admin_token(app, admin_user):
+    """Génère et retourne un token JWT valide pour l'utilisateur admin."""
+    return generate_token(admin_user)
+
+
+@pytest.fixture
+def client_token(app, client_user):
+    """Génère et retourne un token JWT valide pour l'utilisateur client."""
+    return generate_token(client_user)

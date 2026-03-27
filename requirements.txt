@@ -2,3 +2,9 @@ Flask
 Flask-SQLAlchemy
 PyJWT
 pytest
+# werkzeug utilisé pour check_password_hash / generate_password_hash
+# Déjà installé automatiquement via Flask mais ajouté ici pour référence
+werkzeug
+# SQLAlchemy est utilisé directement parfois directement quand Flask-SQLAlchemy n'expose pas les fonctions
+# Déjà installé automatiquement via Flask-SQLAlchemy mais ajouté ici pour référence
+sqlalchemy

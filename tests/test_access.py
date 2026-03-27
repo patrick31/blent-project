@@ -9,3 +9,14 @@ def test_api_access(client):
     assert welcome.status_code == 200
     assert welcome.get_json()["version"] == __version__
     assert welcome.get_json()["message"] == "DigiMarket API OK"
+
+
+def test_user_login(client, client_token, admin_token):
+    """Vérifie l'API retourne l'utilisateur connecté."""
+    admin_me = client.get("/api/auth/me", headers={"Authorization": f"Bearer {admin_token}"})
+    client_me = client.get("/api/auth/me", headers={"Authorization": f"Bearer {client_token}"})
+
+    assert admin_me.status_code == 200
+    assert admin_me.get_json()["user"]["nom"] == "admin"
+    assert client_me.status_code == 200
+    assert client_me.get_json()["user"]["nom"] == "alice"
