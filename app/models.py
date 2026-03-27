@@ -3,7 +3,7 @@ Modèles SQLAlchemy de DigiMarket.
 Définit les quatres classes du modèle de données : Utilisateur, Produit, Commande, LigneCommande.
 Des méthodes utilitaires spécifiques au modèle de donnée sont ajoutées dans les classes lorsque nécessaire.
 
-Réalisé pendant l'étape 1 du projet.
+Réalisé pendant l'étape 1 du projet et étendu à l'étape 2.
 """
 from datetime import datetime, timezone
 
@@ -40,5 +40,31 @@ class Utilisateur(db.Model):
             "nom": self.nom,
             "email": self.email,
             "role": self.role,
+            "date_creation": self.date_creation.isoformat(),
+        }
+
+
+# Etape 2
+class Produit(db.Model):
+    """Représente un produit du catalogue DigiMarket."""
+
+    __tablename__ = "produits"
+
+    id = db.Column(db.Integer, primary_key=True)
+    nom = db.Column(db.String(255), nullable=False)
+    description = db.Column(db.Text, nullable=True)
+    categorie = db.Column(db.String(120), nullable=True)
+    prix = db.Column(db.Float, nullable=False)
+    quantite_stock = db.Column(db.Integer, nullable=False, default=0)
+    date_creation = db.Column(db.DateTime, nullable=False, default=lambda: datetime.now(timezone.utc))
+
+    def to_dict(self) -> dict:
+        return {
+            "id": self.id,
+            "nom": self.nom,
+            "description": self.description,
+            "categorie": self.categorie,
+            "prix": self.prix,
+            "quantite_stock": self.quantite_stock,
             "date_creation": self.date_creation.isoformat(),
         }

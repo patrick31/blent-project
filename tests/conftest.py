@@ -8,7 +8,7 @@ from app import create_app
 from app.config import TestingConfig
 from app.extensions import db
 from app.utils.helpers import generate_token
-from app.models import Utilisateur
+from app.models import Utilisateur, Produit
 
 
 @pytest.fixture
@@ -59,3 +59,19 @@ def admin_token(app, admin_user):
 def client_token(app, client_user):
     """Génère et retourne un token JWT valide pour l'utilisateur client."""
     return generate_token(client_user)
+
+
+@pytest.fixture
+def sample_products(app):
+    """Insère trois produits de test en base et les retourne sous forme de liste."""
+    produits = [
+        Produit(nom="Laptop Pro", description="Portable puissant", prix=1499.99,
+                quantite_stock=5, categorie="ordinateur portable"),
+        Produit(nom="Gaming Mouse", description="Souris précise", prix=59.90,
+                quantite_stock=20, categorie="peripherique gaming"),
+        Produit(nom="USB-C Dock", description="Station d'accueil", prix=129.00,
+                quantite_stock=10, categorie="accessoire"),
+    ]
+    db.session.add_all(produits)
+    db.session.commit()
+    return produits

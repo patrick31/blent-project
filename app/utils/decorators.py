@@ -1,7 +1,7 @@
 """
 Décorateurs Flask pour la protection des routes par authentification et rôle.
 
-Réalisé pendant l'étape 1
+Réalisé pendant l'étape 1 et extension à l'étape 2
 """
 from functools import wraps
 
@@ -32,6 +32,20 @@ def token_required(func):
             return json_error("Utilisateur introuvable.", 401)
 
         g.current_user = utilisateur
+        return func(*args, **kwargs)
+
+    return wrapper
+
+
+# Etape 2 (utile pour Etape 3 aussi)
+def admin_required(func):
+    """Vérifie que l'utilisateur authentifié possède le rôle admin."""
+
+    @wraps(func)
+    @token_required
+    def wrapper(*args, **kwargs):
+        if g.current_user.role != "admin":
+            return json_error("Accès réservé aux administrateurs.", 403)
         return func(*args, **kwargs)
 
     return wrapper
