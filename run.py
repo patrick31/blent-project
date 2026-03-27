@@ -1,6 +1,6 @@
 """
 Point d'entrée alternatif pour lancer le serveur Flask en développement.
-Préférer la commande : flask run  (via .flaskenv)
+Equivalent à la commande : flask run (paramètres de lancement identiques via .flaskenv)
 """
 from app import __version__, create_app
 from app.config import DevelopmentConfig
