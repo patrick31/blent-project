@@ -43,10 +43,10 @@ python seed.py
 python run.py
 ```
 
-ou aussi :
+ou aussi (si python-dotenv installé) :
 
 ```shell
-# configuration dans .flaskenv (mode debug + port)
+# Uniquement si python-dotenv installé car configuration dans .flaskenv (mode debug + port)
 flask run
 ```
 

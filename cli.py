@@ -403,11 +403,13 @@ def main():
     print(f"  Serveur cible : {BASE_URL}")
     status, data = api("GET", "/")
     if status is None:
-        print("  [ATTENTION] Serveur inaccessible. Lancez d'abord : python run.py")
+        print("  [ERREUR] Serveur inaccessible. Lancez d'abord : python run.py")
+        sys.exit(1)
     elif data and "message" in data:
         print(f"  HTTP {status}  {json.dumps(data, ensure_ascii=False)}")
     else:
         print(f"  [ATTENTION] Réponse inattendue (HTTP {status}). Le serveur DigiMarket est-il bien lancé ?")
+        sys.exit(1)
     print()
     while True:
         auth_menu()

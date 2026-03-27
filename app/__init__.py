@@ -9,7 +9,7 @@ from pathlib import Path
 
 from flask import Flask
 
-__version__ = "1.5.0"
+__version__ = "1.7.0"
 
 from .config import DevelopmentConfig
 from .extensions import db
