@@ -1,1 +1,39 @@
-/.idea/
+# IDE
+.idea/
+.vscode/
+
+# Claude Code
+.claude/
+
+# Environnement virtuel Python
+.venv/
+venv/
+env/
+
+# Cache Python
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Base de données SQLite
+instance/
+*.db
+*.sqlite3
+
+# Variables d'environnement
+.env
+.env.*
+!.env.example
+
+# Pytest
+.pytest_cache/
+.coverage
+htmlcov/
+
+# macOS
+.DS_Store
+
+# Distribution / packaging
+dist/
+build/
+*.egg-info/
