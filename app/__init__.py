@@ -4,12 +4,13 @@ Contient la factory create_app qui initialise la base de données et enregistre 
 
 Réalisé pendant la préparation du projet (étape 0)
 """
-from flask import Flask, jsonify
+from flask import Flask
 
-__version__ = "1.0.0"
+__version__ = "1.0.1"
 
 from .config import DevelopmentConfig
 from .extensions import db
+from .utils.helpers import json_message
 
 
 # Etape 0
@@ -31,6 +32,6 @@ def create_app(config_class=None):
     @app.get("/")
     def healthcheck():
         """ Message test de fonctionnement de l'APi sur la route principale ajouté à la création de l'application."""
-        return jsonify({"message": "DigiMarket API OK", "version": __version__})
+        return json_message("DigiMarket API OK", version=__version__)
 
     return app

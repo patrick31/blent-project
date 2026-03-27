@@ -19,3 +19,9 @@ def app():
         yield app
         db.session.remove()
         db.drop_all()
+
+
+@pytest.fixture
+def client(app):
+    """Retourne le client de test Flask pour effectuer des requêtes HTTP simulées."""
+    return app.test_client()
